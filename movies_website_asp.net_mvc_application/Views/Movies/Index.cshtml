@@ -4,14 +4,25 @@
     ViewData["Title"] = "List of Movies";
 }
 
-<div class"row">
+    <div class="album py-5 bg-light">
+        <div class"container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+               
         @foreach (var item in Model)
     {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <img src="@item.ImageURL">
-            <p>@item.Name</p>
-            <p>@item.Description</p>
-            <p>@item.MovieCategory</p>
-        </div>
+         <div class="col">
+                    <div class="card shadow-sm" style="width: 18rem;">
+                      <img src="@item.ImageURL" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="text-dark text-sm-start">Price : @item.Price $</p>
+                        <a href="#" class="btn btn-primary w-100">Buy</a>
+                      </div>
+                    </div>
+               </div>
     }
-</div>
+     
+            </div>
+        </div>
+    </div>
