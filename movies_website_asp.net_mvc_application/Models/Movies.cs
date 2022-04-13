@@ -15,5 +15,6 @@ namespace movies_website_asp.net_mvc_application.Models
 
         //Relationships
         public List<Movies_Actors> Movies_Actors { get; set; }
+        public List<Users_Movies> Users_Movies { get; set; }
     }
 }

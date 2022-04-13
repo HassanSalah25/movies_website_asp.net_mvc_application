@@ -296,6 +296,47 @@ namespace movies_website_asp.net_mvc_application.Data.Migrations
                     b.ToTable("Movies_Actors");
                 });
 
+            modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Users_Movies", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Users_Movies");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -366,6 +407,25 @@ namespace movies_website_asp.net_mvc_application.Data.Migrations
                     b.Navigation("Movies");
                 });
 
+            modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Users_Movies", b =>
+                {
+                    b.HasOne("movies_website_asp.net_mvc_application.Models.Movies", "Movies")
+                        .WithMany("Users_Movies")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("movies_website_asp.net_mvc_application.Models.Users", "Users")
+                        .WithMany("Users_Movies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movies");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Actors", b =>
                 {
                     b.Navigation("Movies_Actors");
@@ -374,6 +434,13 @@ namespace movies_website_asp.net_mvc_application.Data.Migrations
             modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Movies", b =>
                 {
                     b.Navigation("Movies_Actors");
+
+                    b.Navigation("Users_Movies");
+                });
+
+            modelBuilder.Entity("movies_website_asp.net_mvc_application.Models.Users", b =>
+                {
+                    b.Navigation("Users_Movies");
                 });
 #pragma warning restore 612, 618
         }
